@@ -1,0 +1,44 @@
+// MainActivity.java
+package com.example.myapp;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+   private TextView countdownTimerTextView;
+   private Button startTimerButton;
+   private CountDownTimer countDownTimer;
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
+
+       countdownTimerTextView = findViewById(R.id.countdown_timer);
+       startTimerButton = findViewById(R.id.start_timer_button);
+
+       startTimerButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               countDownTimer = new CountDownTimer(30000, 1000) {
+                   @Override
+                   public void onTick(long millisUntilFinished) {
+                       long minutes = millisUntilFinished / 60000;
+                       long seconds = (millisUntilFinished % 60000) / 1000;
+                       String timeLeftFormatted = String.format("%02d:%02d", minutes, seconds);
+                       countdownTimerTextView.setText(timeLeftFormatted);
+                   }
+
+                   @Override
+                   public void onFinish() {
+                       countdownTimerTextView.setText("00:00");
+                   }
+               }.start();
+           }
+       });
+   }
+}

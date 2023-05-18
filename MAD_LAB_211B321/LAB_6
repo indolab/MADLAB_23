@@ -1,0 +1,49 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+public class GridApplication extends Application {
+
+    private boolean isZeroTurn = true; // Flag to track alternating turns
+
+    @Override
+    public void start(Stage primaryStage) {
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        // Create the images
+        Image zeroImage = new Image("path/to/zero.png"); // Replace with the actual path to the '0' image
+        Image xImage = new Image("path/to/x.png"); // Replace with the actual path to the 'X' image
+
+        // Add click event handlers to the grid cells
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                ImageView imageView = new ImageView();
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
+                imageView.setOnMouseClicked(event -> {
+                    if (isZeroTurn) {
+                        imageView.setImage(zeroImage);
+                    } else {
+                        imageView.setImage(xImage);
+                    }
+                    isZeroTurn = !isZeroTurn; // Toggle the turn
+                });
+                gridPane.add(imageView, col, row);
+            }
+        }
+
+        Scene scene = new Scene(gridPane, 330, 330);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Grid Application");
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}

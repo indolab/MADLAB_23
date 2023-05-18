@@ -1,0 +1,18 @@
+ @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+    }
+
+    private void updateCurrentLocationMarker(LatLng latLng) {
+        if (currentLocationMarker == null) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng)
+                    .title("Current Location");
+            currentLocationMarker = googleMap.addMarker(markerOptions);
+        } else {
+            currentLocationMarker.setPosition(latLng);
+        }
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+    }
+
+   
